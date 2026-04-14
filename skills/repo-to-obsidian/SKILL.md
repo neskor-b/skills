@@ -18,12 +18,11 @@ description: >
 Orchestrates two sub-skills to transform any code repository into a fully linked Obsidian vault:
 
 1. **`repo-architecture-analyzer`** — analyzes the codebase and builds the architecture model
-2. **`obsidian-syntax`** — defines how to format and link Obsidian notes correctly
+2. **`obsidian-markdown`** — defines how to format and link Obsidian notes correctly
 
-Read both skill files before starting:
-
-- `/mnt/skills/user/repo-architecture-analyzer/SKILL.md`
-- `/mnt/skills/user/obsidian-syntax/SKILL.md`
+**REQUIRED SUB-SKILLS:** Invoke both before starting:
+- `repo-architecture-analyzer`
+- `obsidian-markdown`
 
 ---
 
@@ -220,7 +219,7 @@ Keep the full analysis result in memory — it drives all note generation in Ste
 
 ### Step 2 — Generate Obsidian Notes
 
-Using the analysis from Step 1 and formatting rules from **`obsidian-syntax`**, generate one `.md` file per entity.
+Using the analysis from Step 1 and formatting rules from **`obsidian-markdown`**, generate one `.md` file per entity.
 
 #### Note Template
 
