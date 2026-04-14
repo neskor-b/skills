@@ -1,0 +1,7 @@
+interface:
+  display_name: "Obsidian Source Notes"
+  short_description: "Turn sources into linked Obsidian notes"
+  default_prompt: "Use $obsidian-source-notes to turn this programming source into linked Ukrainian Obsidian notes."
+
+policy:
+  allow_implicit_invocation: true
