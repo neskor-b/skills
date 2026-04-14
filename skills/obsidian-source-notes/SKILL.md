@@ -1,11 +1,51 @@
 ---
 name: obsidian-source-notes
-description: Create and update linked Ukrainian Obsidian Markdown notes in `vault/` from programming sources such as books, articles, docs, and courses, reusing existing notes and routing ideas into source notes, concepts, maps, playbooks, code notes, and captures.
+description: Use when turning programming sources (books, articles, docs, courses) into linked Ukrainian notes in an Obsidian vault, routing ideas into source notes, concepts, maps, playbooks, code notes, and captures.
 ---
 
 # Obsidian Source Notes
 
 Use this skill to turn programming sources into linked Obsidian notes in `vault/`.
+
+## Sub-skills
+
+Do not re-implement Obsidian logic here. Use the relevant sub-skill for each case:
+
+### `obsidian-markdown`
+
+Use when writing or editing note content:
+- Formatting wikilinks: `[[Note]]`, `[[Note|Display]]`, `[[Note#Heading]]`, `[[Note#^block-id]]`
+- Adding or editing block IDs (`^block-id` anchors for definitions, claims, quotes, code)
+- Writing frontmatter / properties (title, tags, aliases, cssclasses, custom fields)
+- Adding callouts (`> [!note]`, `> [!warning]`, etc.)
+- Embedding notes, images, or PDFs (`![[embed]]`)
+- Adding inline tags (`#tag`, `#nested/tag`)
+- Writing LaTeX math (`$formula$`, `$$block$$`)
+- Writing Mermaid diagrams
+- Adding Obsidian comments (`%%hidden%%`)
+- Adding footnotes
+
+### `obsidian-cli`
+
+Use when interacting with the vault from the terminal:
+- Reading note content (`obsidian read file="..."`)
+- Creating new notes (`obsidian create name="..."`)
+- Appending content to a note (`obsidian append file="..."`)
+- Searching vault content (`obsidian search query="..."`)
+- Reading or appending to the daily note (`obsidian daily:read`, `obsidian daily:append`)
+- Setting or updating note properties (`obsidian property:set`)
+- Listing tasks (`obsidian tasks daily todo`)
+- Listing tags or backlinks (`obsidian tags`, `obsidian backlinks`)
+
+### `obsidian-bases`
+
+Use when building database views over notes:
+- Creating `.base` files
+- Defining `filters` to query notes by tag, folder, or property
+- Defining `formulas` to compute values (dates, conditionals, arithmetic)
+- Configuring `views` (table, cards, list, map)
+- Adding `summaries` (Sum, Average, Count, etc.)
+- Embedding a base into a note (`![[File.base]]`)
 
 Supported source types:
 
@@ -64,25 +104,21 @@ Supported source types:
 - Final note content must be in Ukrainian unless the user asks otherwise.
 - One note equals one stable idea.
 - Prefer updating over creating a duplicate.
-- Use `[[wikilinks]]`; use path-based links when names may collide.
-- Add stable block IDs for definitions, claims, quotes, and code anchors.
 - Keep source-bound material in the source folder.
 - Move reusable synthesis to `vault/02-Concepts/`.
 - Move procedures and checklists to `vault/04-Playbooks/`.
 - Do not create standalone summary notes by default.
 - Keep filenames short, lowercase, and predictable.
-- Use these filename patterns by default: `ch-XX-topic.md`, `note-topic.md`, `concept-topic.md`, `code-topic.md`, `playbook-topic.md`, `capture-topic.md`.
-- Use stable, readable block IDs such as `^book-ch03-main-idea`, `^note-api-rate-limit`, or `^code-null-check-example`.
+- Use these filename patterns: `ch-XX-topic.md`, `note-topic.md`, `concept-topic.md`, `code-topic.md`, `playbook-topic.md`, `capture-topic.md`.
 - Prefer `chapter` notes for chapter-sized book or course sections; prefer `source` notes for smaller source fragments, articles, docs pages, or narrowly scoped excerpts.
 
 ## Metadata
 
-- Start each note with a short summary or definition.
-- Keep frontmatter minimal and correct.
-- Source-bound notes should keep `source_type`, `source_slug`, and `source_title`.
-- Shared notes should keep `scope` and `sources` current when relevant.
-- Playbooks should keep `scope: playbook` and `sources` current when relevant.
-- Add `aliases` only when they improve retrieval.
+Source-specific frontmatter fields (use `obsidian-markdown` for all general property rules):
+
+- Source-bound notes: include `source_type`, `source_slug`, and `source_title`.
+- Shared notes: include `scope` and `sources` when relevant.
+- Playbooks: include `scope: playbook` and `sources` when relevant.
 
 ## Templates
 
