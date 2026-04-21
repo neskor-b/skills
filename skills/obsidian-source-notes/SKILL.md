@@ -7,6 +7,8 @@ description: Use when turning programming sources (books, articles, docs, course
 
 Use this skill to turn programming sources into linked Obsidian notes in `vault/`.
 
+Resolve every relative path mentioned in this skill relative to this skill directory, meaning the directory that contains this `SKILL.md`, not relative to the current workspace or the Obsidian vault.
+
 ## Sub-skills
 
 Do not re-implement Obsidian logic here. Use the relevant sub-skill for each case:
@@ -55,6 +57,8 @@ Supported source types:
 - `courses`
 
 ## Workflow
+
+Before writing, resolve all relative paths in this skill against this skill directory, meaning the directory that contains this `SKILL.md`. `_templates/...` paths refer to files inside the skill folder, not inside the Obsidian vault, and you must open the matching template file before writing notes.
 
 1. Inspect `vault/01-Sources/<source-type>/<source-slug>/` before writing.
 2. Route each idea first:
@@ -122,7 +126,11 @@ Source-specific frontmatter fields (use `obsidian-markdown` for all general prop
 
 ## Templates
 
-Open the matching template before writing:
+Rule: `_templates/...` paths in this skill always refer to files inside this skill folder, never to `vault/_templates/...`.
+
+Open the matching template file from this skill directory before writing any note.
+
+Example: `_templates/chapter-note.md` resolves to the file at `./_templates/chapter-note.md` relative to this `SKILL.md`, not `vault/_templates/chapter-note.md`.
 
 - [_templates/source-note.md](_templates/source-note.md)
 - [_templates/chapter-note.md](_templates/chapter-note.md)
@@ -130,7 +138,3 @@ Open the matching template before writing:
 - [_templates/code-note.md](_templates/code-note.md)
 - [_templates/playbook-note.md](_templates/playbook-note.md)
 - [_templates/capture-note.md](_templates/capture-note.md)
-
-## Optional Prompt
-
-- [_prompts/obsidian-session-prompt.md](_prompts/obsidian-session-prompt.md)
