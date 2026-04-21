@@ -24,7 +24,72 @@ Some local skills directly reference skills from [`kepano/obsidian-skills`](http
 
 ## Installation
 
-For installation instructions, see the upstream repository: <https://github.com/kepano/obsidian-skills>.
+Use the [`vercel-labs/skills`](https://github.com/vercel-labs/skills) CLI to install skills from this repository and its external dependencies.
+
+### 1. Install the local skills from this repository
+
+From the repository root, you can install selected local skills via the current directory path:
+
+```bash
+npx skills add . \
+  --agent codex \
+  --skill obsidian-source-notes \
+  --skill repo-architecture-analyzer \
+  --skill repo-to-obsidian
+```
+
+If you want to see what this repository exposes before installing anything:
+
+```bash
+npx skills add . --list
+```
+
+### 2. Inspect the upstream skills
+
+```bash
+npx skills add kepano/obsidian-skills --list
+```
+
+### 3. Install the required external skills
+
+For Codex, install the skills that this repository depends on:
+
+```bash
+npx skills add kepano/obsidian-skills \
+  --agent codex \
+  --skill obsidian-markdown \
+  --skill obsidian-cli \
+  --skill obsidian-bases
+```
+
+If you want those skills available across all projects, add `--global`:
+
+```bash
+npx skills add kepano/obsidian-skills \
+  --agent codex \
+  --global \
+  --skill obsidian-markdown \
+  --skill obsidian-cli \
+  --skill obsidian-bases
+```
+
+### 4. Install the optional skills recorded in `skills-lock.json`
+
+`skills-lock.json` also contains `defuddle` and `json-canvas`. They are not required by the current local skills, but you can install them from the same upstream repository:
+
+```bash
+npx skills add kepano/obsidian-skills \
+  --agent codex \
+  --skill defuddle \
+  --skill json-canvas
+```
+
+### Notes on `vercel-labs/skills`
+
+- `npx skills add <owner>/<repo>` accepts GitHub shorthand, full Git URLs, and local paths.
+- Use `--list` to preview available skills without installing anything.
+- By default, installation is project-scoped; `--global` installs to your user-level agent directory.
+- Use `--copy` if you prefer copied files over symlinks.
 
 ## Notes
 
