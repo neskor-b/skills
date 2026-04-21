@@ -28,17 +28,15 @@ Use the [`vercel-labs/skills`](https://github.com/vercel-labs/skills) CLI to ins
 
 ### 1. Install the local skills from this repository
 
-From the repository root, you can install selected local skills via the current directory path:
+From the repository root:
 
 ```bash
-npx skills add . \
-  --agent codex \
-  --skill obsidian-source-notes \
-  --skill repo-architecture-analyzer \
-  --skill repo-to-obsidian
+npx skills add .
 ```
 
-If you want to see what this repository exposes before installing anything:
+The installer will ask which agent/LLM targets you want to use.
+
+If you want to preview what this repository exposes before installing anything:
 
 ```bash
 npx skills add . --list
@@ -52,37 +50,17 @@ npx skills add kepano/obsidian-skills --list
 
 ### 3. Install the required external skills
 
-For Codex, install the skills that this repository depends on:
+To install the upstream skills that this repository depends on:
 
 ```bash
-npx skills add kepano/obsidian-skills \
-  --agent codex \
-  --skill obsidian-markdown \
-  --skill obsidian-cli \
-  --skill obsidian-bases
+npx skills add kepano/obsidian-skills
 ```
 
-If you want those skills available across all projects, add `--global`:
-
-```bash
-npx skills add kepano/obsidian-skills \
-  --agent codex \
-  --global \
-  --skill obsidian-markdown \
-  --skill obsidian-cli \
-  --skill obsidian-bases
-```
+Then choose the skills you need during the interactive install flow. For this repository, the required upstream skills are `obsidian-markdown`, `obsidian-cli`, and `obsidian-bases`.
 
 ### 4. Install the optional skills recorded in `skills-lock.json`
 
-`skills-lock.json` also contains `defuddle` and `json-canvas`. They are not required by the current local skills, but you can install them from the same upstream repository:
-
-```bash
-npx skills add kepano/obsidian-skills \
-  --agent codex \
-  --skill defuddle \
-  --skill json-canvas
-```
+`skills-lock.json` also contains `defuddle` and `json-canvas`. They are not required by the current local skills, but you can also select them from the same upstream repository during the interactive flow.
 
 ### Notes on `vercel-labs/skills`
 
