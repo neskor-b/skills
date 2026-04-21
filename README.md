@@ -26,7 +26,7 @@ Some local skills directly reference skills from [`kepano/obsidian-skills`](http
 
 Use the [`vercel-labs/skills`](https://github.com/vercel-labs/skills) CLI to install skills from this repository and its external dependencies.
 
-### 1. Install the local skills from this repository
+### Local skills from this repository
 
 From the repository root:
 
@@ -34,40 +34,13 @@ From the repository root:
 npx skills add .
 ```
 
-The installer will ask which agent/LLM targets you want to use.
-
-If you want to preview what this repository exposes before installing anything:
-
-```bash
-npx skills add . --list
-```
-
-### 2. Inspect the upstream skills
-
-```bash
-npx skills add kepano/obsidian-skills --list
-```
-
-### 3. Install the required external skills
-
-To install the upstream skills that this repository depends on:
+### Required external skills
 
 ```bash
 npx skills add kepano/obsidian-skills
 ```
 
-Then choose the skills you need during the interactive install flow. For this repository, the required upstream skills are `obsidian-markdown`, `obsidian-cli`, and `obsidian-bases`.
-
-### 4. Install the optional skills recorded in `skills-lock.json`
-
-`skills-lock.json` also contains `defuddle` and `json-canvas`. They are not required by the current local skills, but you can also select them from the same upstream repository during the interactive flow.
-
-### Notes on `vercel-labs/skills`
-
-- `npx skills add <owner>/<repo>` accepts GitHub shorthand, full Git URLs, and local paths.
-- Use `--list` to preview available skills without installing anything.
-- By default, installation is project-scoped; `--global` installs to your user-level agent directory.
-- Use `--copy` if you prefer copied files over symlinks.
+Choose these skills during install: `obsidian-markdown`, `obsidian-cli`, `obsidian-bases`.
 
 ## Notes
 
