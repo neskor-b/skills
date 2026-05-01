@@ -6,7 +6,7 @@ This repository contains my local skills for working with Obsidian and repositor
 
 | Skill | Purpose | External dependencies |
 | --- | --- | --- |
-| `obsidian-source-notes` | Turns programming sources into linked notes for Obsidian | `obsidian-markdown`, `obsidian-cli`, `obsidian-bases` |
+| `obsidian-programming-notes` | Turns programming sources into linked notes for Obsidian | `obsidian-markdown`, `obsidian-cli`, `obsidian-bases` |
 | `repo-architecture-analyzer` | Analyzes a repository architecture and builds a structured entity model | None |
 | `repo-to-obsidian` | Generates a linked Obsidian vault from a code repository | `repo-architecture-analyzer` (local), `obsidian-markdown` |
 
@@ -16,9 +16,9 @@ Some local skills directly reference skills from [`kepano/obsidian-skills`](http
 
 | Skill | Used by | Repository |
 | --- | --- | --- |
-| `obsidian-markdown` | `obsidian-source-notes`, `repo-to-obsidian` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-markdown> |
-| `obsidian-cli` | `obsidian-source-notes` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-cli> |
-| `obsidian-bases` | `obsidian-source-notes` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-bases> |
+| `obsidian-markdown` | `obsidian-programming-notes`, `repo-to-obsidian` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-markdown> |
+| `obsidian-cli` | `obsidian-programming-notes` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-cli> |
+| `obsidian-bases` | `obsidian-programming-notes` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-bases> |
 
 `skills-lock.json` in this repository also shows that the installed external skills come from `git@github.com:kepano/obsidian-skills.git`.
 
