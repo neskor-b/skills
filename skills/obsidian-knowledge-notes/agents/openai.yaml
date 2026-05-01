@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Knowledge Notes"
+  short_description: "Turn source material into linked Obsidian knowledge notes"
+  default_prompt: "Use $obsidian-knowledge-notes to turn these excerpts into linked Obsidian notes, concepts, and maps."
