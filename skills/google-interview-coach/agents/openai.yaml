@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Interview Coach"
+  short_description: "Run adaptive interviews from Google Sheets and maintain focused Google Docs cheat sheets"
+  default_prompt: "Use $google-interview-coach to interview me from my Google Sheet and update my Google Doc cheat sheet after review."
