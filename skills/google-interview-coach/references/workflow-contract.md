@@ -1,8 +1,12 @@
 # Workflow Contract
 
+## Narrow Empty-Sheet Preflight
+
+Only when the prompt explicitly says the Sheet is empty and asks for the next action, propose a minimal schema (at least question and section-link fields) and wait for approval before entering the state machine. After approval, begin normal `SETUP`. This preflight does not replace normal `DISCOVER` handling for an empty Sheet found during the workflow.
+
 ## Session Setup
 
-Reuse URLs already in the conversation; otherwise request the Google Sheet URL, Google Doc URL, and selection mode (uniform random or user-selected topic/question). Validate both URLs, file types, and read access. Ask “Українська чи English?” and wait for the candidate’s selection before the first interview question. For an explicitly known empty Sheet, first propose the schema and wait for its approval; complete language setup before interviewing. Before a final write, verify edit access; read-only access permits interview and preview only.
+Reuse URLs already in the conversation; otherwise request the Google Sheet URL, Google Doc URL, and selection mode (uniform random or user-selected topic/question). Validate both URLs, file types, and read access. Ask “Українська чи English?” and wait for the candidate’s selection before the first interview question. Before a final write, verify edit access; read-only access permits interview and preview only.
 
 ## Schema and Document Discovery
 
