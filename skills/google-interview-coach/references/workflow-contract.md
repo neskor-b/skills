@@ -2,7 +2,7 @@
 
 ## Session Setup
 
-Ask “Українська чи English?” and wait for the candidate’s selection before any question. Reuse URLs already in the conversation; otherwise request the Google Sheet URL, Google Doc URL, and selection mode (uniform random or user-selected topic/question). Validate both URLs, file types, and read access. Before a final write, verify edit access; read-only access permits interview and preview only.
+Reuse URLs already in the conversation; otherwise request the Google Sheet URL, Google Doc URL, and selection mode (uniform random or user-selected topic/question). Validate both URLs, file types, and read access. Ask “Українська чи English?” and wait for the candidate’s selection before the first interview question. For an explicitly known empty Sheet, first propose the schema and wait for its approval; complete language setup before interviewing. Before a final write, verify edit access; read-only access permits interview and preview only.
 
 ## Schema and Document Discovery
 

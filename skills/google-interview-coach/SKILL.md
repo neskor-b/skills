@@ -11,7 +11,7 @@ Follow these states in order: `SETUP -> DISCOVER -> SELECT -> INTERVIEW -> EVALU
 
 ## State contracts
 
-- **SETUP:** Ask “Українська чи English?” and wait for a choice; reuse any supplied URLs, collect missing Sheet/Doc URLs and selection mode, validate access, and confirm edit access before a possible write.
+- **SETUP:** Reuse any supplied URLs, collect missing Sheet/Doc URLs and selection mode, validate access, and confirm edit access before a possible write. Ask “Українська чи English?” and wait for a choice before the first interview question. For an explicitly known empty Sheet, propose the schema first and await its approval; then complete language setup before interviewing.
 - **DISCOVER:** Infer the Sheet and Doc conventions from their actual structures. Preserve headers, column order, formulas, validations, links, formatting, heading hierarchy, naming, and section-linking convention. Ask one focused clarification for ambiguity; propose an empty-Sheet schema and await approval.
 - **SELECT:** Randomly select uniformly from eligible non-empty question rows, or exact/semantic-match a user topic. Resolve multiple matches with the user. Do not create a missing-topic row yet, and prevent duplicate Doc sections.
 - **INTERVIEW:** Interview before generating any cheat sheet. Ask one open-ended prompt at a time, then realistic evidence-seeking follow-ups without leaking answers or showing/editing the cheat sheet.
