@@ -2,15 +2,15 @@
 
 ## Narrow Empty-Sheet Preflight
 
-Only when the prompt explicitly says the Sheet is empty and asks for the next action, propose a minimal schema (at least question and section-link fields) and wait for approval before entering the state machine. After approval, begin normal `SETUP`. This preflight does not replace normal `DISCOVER` handling for an empty Sheet found during the workflow.
+Only when the prompt explicitly says the Sheet is empty and asks for the next action, propose a minimal schema (at least question and section-link fields) and wait for approval before entering the state machine. Record the approved schema as session state, begin normal `SETUP`, and carry that schema into `DISCOVER`; do not request a second schema approval. An empty Sheet first discovered during normal `DISCOVER` still requires one proposal and explicit approval.
 
 ## Session Setup
 
-Reuse URLs already in the conversation; otherwise request the Google Sheet URL, Google Doc URL, and selection mode (uniform random or user-selected topic/question). Validate both URLs, file types, and read access. Ask “Українська чи English?” and wait for the candidate’s selection before the first interview question. Before a final write, verify edit access; read-only access permits interview and preview only.
+Reuse URLs already in the conversation; otherwise request the Google Sheet URL, Google Doc URL, and selection mode (uniform random or user-selected topic/question). Use Drive operations to locate files and inspect metadata or permissions, Sheet operations for spreadsheet structure and cells, and Doc operations for document structure and sections. Validate both URLs, file types, and read access. A wrong type, inaccessible file, or failed read stops the workflow with the exact correction needed. Record edit capability separately: read-only access still permits discovery, selection, the full interview, evaluation, cheat-sheet preparation, and preview; it blocks only mutations. Ask “Українська чи English?” and wait for the candidate’s selection before the first interview question.
 
 ## Schema and Document Discovery
 
-Read headers, representative populated rows, formatting, formulas, validations, links, and inactive/archive signals to infer the Sheet schema. Preserve every observed convention. Inspect Doc heading hierarchy, section naming/formatting, and section-linking practice. If the Sheet is empty, propose a minimal approved schema (at least question and section-link fields) and wait. If targets or columns are ambiguous, ask one focused clarification; never guess.
+Read headers, representative populated rows, formatting, formulas, validations, links, and inactive/archive signals to infer the Sheet schema. Preserve every observed convention. Inspect Doc heading hierarchy, section naming/formatting, and section-linking practice. If the Sheet is empty, use the schema already approved in preflight; otherwise propose a minimal schema (at least question and section-link fields) once and wait for approval. If targets or columns are ambiguous, ask one focused clarification; never guess.
 
 ## Question Resolution
 
@@ -30,19 +30,25 @@ Keep a complete, self-contained overview of the whole topic—not merely a mista
 
 ## Preview Contract
 
-Before any mutation, show: the target question and exact Sheet row action; the Doc section title and create/update action; the proposed outline; personalized emphasis; and the specific section-link action. Wait for explicit confirmation. A request to revise the preview, or a previous general request to update, is not approval.
+Before showing the preview, capture bounded preservation witnesses for the exact planned mutation scope: target and neighboring Sheet values plus relevant formulas, validations, formatting, and row identities; and the target Doc section identity/content, section boundaries, nearby headings, and link anchor. Retain these concrete ranges/identifiers and fingerprints with the preview so the pre-write reread and post-write verification compare the same witnesses.
+
+Show: the target question and exact Sheet row action; the Doc section title and create/update action; the proposed outline; personalized emphasis; and the specific section-link action. If edit access is absent, label the preview read-only and disclose that no write can occur until access changes. Wait for explicit confirmation of the current preview. A revision request is not approval: update the preview and its witnesses, then wait again. A decline is not approval: cancel the pending write and stop unless the user later requests another preview.
 
 ## Approved Write
 
-After approval, re-read the target Sheet row and Doc section. Update the exact existing section or create one using the current heading hierarchy, naming, formatting, and link convention; verify it is not a duplicate. Obtain or preserve a section-specific link, then mutate only the intended Sheet fields or add the deferred new row according to the inferred schema.
+Immediately before mutation, verify edit access and re-read the target Sheet row and Doc section against the exact approved preview and its preservation witnesses. If a concurrent change materially affects the target, proposed content, row action, section action, link action, or preservation assumptions, abort `WRITE`: make no mutation, invalidate the stale approval, rebase on the latest content, return to `PREVIEW`, and require fresh explicit approval. Never treat the prior approval as authorization for the rebased write.
+
+When the approved snapshot is still current, update the exact existing section or create one using the current heading hierarchy, naming, formatting, and link convention; verify it is not a duplicate. Obtain or preserve a section-specific link, then mutate only the intended Sheet fields or add the deferred new row according to the inferred schema.
 
 ## Verification and Recovery
 
-Re-read both resources after writing and report what was verified. If concurrent edits change the proposed outcome, rebase and show a revised preview. On partial failure, state which mutation succeeded, do not duplicate content or rows, and offer a safe retry/completion step. Stop with a precise correction for invalid URLs, inaccessible files, wrong types, or no edit access.
+Do not claim completion from successful mutation responses. Re-read the exact created/updated Doc section and the exact Sheet row. Resolve or open the section-specific link stored in that row and prove that its document identity plus anchor/bookmark targets that exact section, not merely the Doc or a similarly titled section. Verify the approved content/action, confirm there is no duplicate section, and compare before/after preservation witnesses for unrelated cells, formulas, validations, formatting, neighboring rows, and unrelated Doc content. Report the row, fields, section, resolved link target, and preservation checks. If the link cannot be resolved to the exact section or any preservation check fails, report verification failure rather than success and preview any corrective mutation for approval.
+
+On partial failure, state exactly which mutation succeeded and which failed. Re-read current state before retrying, reuse the exact already-created/updated section, and retry only the missing operation so no content or row is duplicated. The expected result of the already-approved successful mutation is not concurrent divergence: if there is no additional material change, the existing approval authorizes only the missing approved operation and no new approval is needed. If any additional concurrent change alters the missing operation or preservation assumptions, invalidate the approval and return to a revised preview.
 
 ## Common Mistakes
 
-Do not write early; produce generic summaries; create duplicate rows or sections; guess a schema or target; overwrite unrelated content; change conventions silently; or claim success without post-write reads.
+Do not write early; treat read-only as a reason to skip the interview; produce generic summaries; create duplicate rows or sections; request empty-Sheet schema approval twice; guess a schema or target; reuse stale approval after material changes; overwrite unrelated content; change conventions silently; accept a Doc-level link as a section link; or claim success without post-write reads.
 
 ## Compact Example
 

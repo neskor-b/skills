@@ -1,6 +1,6 @@
-# Local Obsidian Skills
+# Local Agent Skills
 
-This repository contains my local skills for working with Obsidian and repository documentation.
+This repository contains local skills for knowledge management, repository analysis and documentation, and Google Workspace interview coaching.
 
 ## Local Skills
 
@@ -12,9 +12,9 @@ This repository contains my local skills for working with Obsidian and repositor
 | `repo-to-obsidian` | Generates a linked Obsidian vault from a code repository | `repo-architecture-analyzer` (local), `obsidian-markdown` |
 | `google-interview-coach` | Runs adaptive interviews from Google Sheets and maintains linked Google Docs cheat sheets | `google-drive`, `google-sheets`, `google-docs` |
 
-## Required External Skills
+## External Dependencies
 
-Some local skills directly reference skills from [`kepano/obsidian-skills`](https://github.com/kepano/obsidian-skills/tree/main), so those dependencies need to be installed separately.
+Some local skills directly reference external skills or connected services. The Obsidian dependencies below come from [`kepano/obsidian-skills`](https://github.com/kepano/obsidian-skills/tree/main) and need to be installed separately.
 
 For live use of `google-interview-coach`, connect the Google Drive plugin.
 
