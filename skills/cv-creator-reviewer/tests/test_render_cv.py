@@ -12,6 +12,7 @@ SKILL_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = SKILL_ROOT / "scripts" / "render_cv.py"
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 try:
+    import pdfplumber  # noqa: F401
     import pypdf  # noqa: F401
     import reportlab  # noqa: F401
 
@@ -174,6 +175,30 @@ class RenderCvTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertTrue(output.exists())
             self.assertIn("(1 page)", result.stdout)
+
+    def test_rendered_text_lines_do_not_overlap_or_cross_margins(self):
+        import pdfplumber
+
+        renderer = load_renderer()
+        source = (FIXTURES / "two-page.md").read_text(encoding="utf-8")
+        document = renderer.parse_cv_markdown(source)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "layout.pdf"
+            renderer.render_cv(document, output)
+
+            with pdfplumber.open(output) as pdf:
+                for page in pdf.pages:
+                    lines = page.extract_text_lines(layout=False, return_chars=False)
+                    self.assertTrue(lines)
+                    self.assertGreaterEqual(min(line["top"] for line in lines), 39.0)
+                    self.assertLessEqual(max(line["bottom"] for line in lines), page.height - 39.0)
+                    for previous, current in zip(lines, lines[1:]):
+                        self.assertLessEqual(
+                            previous["bottom"],
+                            current["top"] + 0.25,
+                            f"Text lines overlap: {previous['text']} / {current['text']}",
+                        )
 
 
 if __name__ == "__main__":
