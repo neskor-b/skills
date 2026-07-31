@@ -1,0 +1,4 @@
+interface:
+  display_name: "CV Creator & Reviewer"
+  short_description: "Create, improve, review, and tailor IT CVs"
+  default_prompt: "Use $cv-creator-reviewer to create or improve my technical CV, interview me for missing evidence, and show Markdown for approval before PDF."
