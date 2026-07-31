@@ -17,6 +17,8 @@ Use editor's notes for:
 
 Never put evidence statuses, diagnostics, placeholders, questions, or unsupported suggestions inside the clean CV.
 
+Call content a clean or PDF-ready CV only when it starts with the required candidate name and target-role lines and conforms to the accepted Markdown grammar. When identity is missing, show confirmed material as a clearly labeled partial evidence preview outside the clean-CV block, then ask one focused question. Do not present a fragment beginning with a section heading as a complete CV.
+
 ## Clean Markdown shape
 
 Use the applicable subset:
@@ -67,6 +69,8 @@ URL
 ```
 
 Omit optional sections and empty contact fields. Do not print placeholder brackets.
+
+Use bare textual `http://` or `https://` URLs. Do not use Markdown link syntax (`[label](URL)`), images, HTML, tables, nested bullets, or multiple columns; the PDF renderer rejects them.
 
 Use official titles in experience entries. A clarified market-facing title may appear only when explicitly confirmed and must not misrepresent seniority.
 
@@ -153,4 +157,3 @@ Do not deliver the PDF until both content and visual verification pass.
 - Unavailable source URL: request pasted content or another source.
 - Missing PDF dependency: name it precisely and retain the approved Markdown as the complete interim result.
 - Failed text or visual verification: repair and rerun; do not hand off the defective PDF.
-

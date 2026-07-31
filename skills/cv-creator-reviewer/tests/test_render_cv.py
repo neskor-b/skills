@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -10,6 +11,13 @@ from pathlib import Path
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = SKILL_ROOT / "scripts" / "render_cv.py"
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
+try:
+    import pypdf  # noqa: F401
+    import reportlab  # noqa: F401
+
+    PDF_DEPS_AVAILABLE = True
+except ModuleNotFoundError:
+    PDF_DEPS_AVAILABLE = False
 
 
 def load_renderer():
@@ -61,7 +69,17 @@ class ParseCvMarkdownTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Nested bullets"):
             renderer.parse_cv_markdown("# Name\n- Parent\n  - Child\n")
 
+    def test_rejects_markdown_links_in_favor_of_textual_urls(self):
+        renderer = load_renderer()
+        with self.assertRaisesRegex(ValueError, "Markdown links"):
+            renderer.parse_cv_markdown("# Name\nRole\n[GitHub](https://github.com/name)\n")
 
+    def test_rejects_html(self):
+        renderer = load_renderer()
+        with self.assertRaisesRegex(ValueError, "HTML"):
+            renderer.parse_cv_markdown("# Name\nRole\n<div>Hidden layout</div>\n")
+
+@unittest.skipUnless(PDF_DEPS_AVAILABLE, "PDF dependencies are not installed in this Python runtime")
 class RenderCvTests(unittest.TestCase):
     def assert_fixture_renders(self, fixture_name: str, expected_pages: int):
         renderer = load_renderer()
@@ -91,12 +109,71 @@ class RenderCvTests(unittest.TestCase):
                 any(target.startswith("https://github.com/") for target in link_targets),
                 "Expected a clickable GitHub URL annotation",
             )
+            embedded_font_found = False
+            for page in reader.pages:
+                resources = page["/Resources"]
+                for font_ref in resources.get("/Font", {}).values():
+                    font = font_ref.get_object()
+                    descriptor_ref = font.get("/FontDescriptor")
+                    if descriptor_ref is None and font.get("/DescendantFonts"):
+                        descendant = font["/DescendantFonts"][0].get_object()
+                        descriptor_ref = descendant.get("/FontDescriptor")
+                    if descriptor_ref is None:
+                        continue
+                    descriptor = descriptor_ref.get_object()
+                    if any(key in descriptor for key in ("/FontFile", "/FontFile2", "/FontFile3")):
+                        embedded_font_found = True
+            self.assertTrue(embedded_font_found, "Expected at least one embedded font")
 
     def test_renders_one_page_fixture(self):
         self.assert_fixture_renders("one-page.md", 1)
 
     def test_renders_two_page_fixture(self):
         self.assert_fixture_renders("two-page.md", 2)
+
+    def test_verify_content_rejects_unapproved_inserted_text(self):
+        renderer = load_renderer()
+        document = renderer.parse_cv_markdown("# Alex Morgan\nBackend Engineer\n")
+        with self.assertRaisesRegex(ValueError, "does not exactly match"):
+            renderer.verify_content(document, "Alex Morgan\nInvented claim\nBackend Engineer")
+
+    def test_cli_failure_does_not_leave_output(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            invalid_input = temp_path / "invalid.md"
+            output = temp_path / "invalid.pdf"
+            invalid_input.write_text("# Name\n| Bad | Table |\n| --- | --- |\n", encoding="utf-8")
+
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT_PATH), str(invalid_input), str(output)],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("Markdown tables", result.stderr)
+            self.assertFalse(output.exists())
+
+    def test_cli_success_writes_verified_output(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "verified.pdf"
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT_PATH),
+                    str(FIXTURES / "one-page.md"),
+                    str(output),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(output.exists())
+            self.assertIn("(1 page)", result.stdout)
 
 
 if __name__ == "__main__":

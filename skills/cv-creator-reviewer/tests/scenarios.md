@@ -87,4 +87,3 @@ Run each scenario in a fresh context without the proposed design, suspected fail
 - Does not infer material candidate facts.
 - Keeps the response useful by requesting the minimum information needed to start.
 - Asks exactly one focused question.
-

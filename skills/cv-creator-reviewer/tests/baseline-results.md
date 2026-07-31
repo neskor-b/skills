@@ -22,7 +22,7 @@ The scenarios in `scenarios.md` are run without the new skill. Record complete r
 >
 > **Senior Backend Engineer | Java | Payments | AWS**
 >
-> [Location] · Open to International Remote Roles  
+> [Location] · Open to International Remote Roles
 > [Email] · [LinkedIn] · [GitHub]
 >
 > ## Professional Summary
@@ -63,7 +63,7 @@ The scenarios in `scenarios.md` are run without the new skill. Record complete r
 >
 > ## Education
 >
-> **[Degree / Field of Study]** — [University]  
+> **[Degree / Field of Study]** — [University]
 > [Graduation Year]
 >
 > ## Languages
@@ -98,7 +98,7 @@ The scenarios in `scenarios.md` are run without the new skill. Record complete r
 >
 > **Backend Engineer | Java | SQL | AWS**
 >
-> [Location] · Open to International Remote Roles  
+> [Location] · Open to International Remote Roles
 > [Email] · [LinkedIn] · [GitHub]
 >
 > ## Professional Summary
@@ -128,7 +128,7 @@ The scenarios in `scenarios.md` are run without the new skill. Record complete r
 >
 > ## Education
 >
-> **[Degree / Field of Study]** — [University]  
+> **[Degree / Field of Study]** — [University]
 > [Graduation Year]
 >
 > ## Languages

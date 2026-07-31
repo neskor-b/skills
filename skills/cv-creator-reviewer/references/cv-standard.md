@@ -113,4 +113,3 @@ Do not add:
 - [Greenhouse: Supported candidate upload formats](https://support.greenhouse.io/hc/en-us/articles/360052218132-Supported-formats-for-resumes-cover-letters-and-other-candidate-uploads) — supported resume file types.
 - [SAP SuccessFactors: Configuring resume parsing](https://help.sap.com/docs/successfactors-recruiting/setting-up-and-maintaining-sap-successfactors-recruiting/configuring-resume-parsing) — parsing is not always fully accurate.
 - [Europass: Profile information guidance](https://europass.europa.eu/en/what-type-information-should-i-include-my-europass-profile) — omit sensitive information irrelevant to career and training.
-

@@ -65,4 +65,3 @@ The single next question, or a short list only when the user explicitly requeste
 ```
 
 Do not provide a replacement CV in `REVIEW` unless the user requests rewriting.
-

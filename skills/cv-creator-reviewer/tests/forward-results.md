@@ -35,7 +35,7 @@ The exact RED scenarios were repeated in fresh contexts with the completed skill
 >
 > ## Technical Skills
 >
-> **Languages:** Java, SQL  
+> **Languages:** Java, SQL
 > **Cloud:** AWS
 >
 > ## Professional Experience
@@ -136,9 +136,9 @@ The exact RED scenarios were repeated in fresh contexts with the completed skill
 >
 > ## Technical Skills
 >
-> **Languages:** Java  
-> **Frameworks:** Spring Boot  
-> **Databases:** PostgreSQL  
+> **Languages:** Java
+> **Frameworks:** Spring Boot
+> **Databases:** PostgreSQL
 > **Cloud & Infrastructure:** Docker, AWS ECS
 >
 > To strengthen the next revision, have you used Kubernetes, Kafka, or Go in any personal project, course, lab, certification, or proof of concept—even outside professional work?
@@ -151,6 +151,41 @@ The exact RED scenarios were repeated in fresh contexts with the completed skill
 - Truthful advocacy: **PASS** — highlighted adjacent container and backend evidence without disguising gaps.
 - No ATS guarantee: **PASS**.
 - One evidence question: **PASS**.
+- Clean/PDF-ready CV contract: **FAIL** — the fragment began with `## Technical Skills` and lacked the renderer-required candidate title and target role.
+
+### Refactor
+
+Added an observable rule: when identity or another renderer-required field is missing, label confirmed material as a partial evidence preview outside the clean-CV block and ask one focused question.
+
+### Refactor raw response
+
+> ## Editor’s notes
+>
+> - I did not add Kubernetes because it is not confirmed experience. A vacancy requirement cannot be presented as a current qualification if you have not used it.
+> - I excluded the 40% performance claim because it was never measured. We can use a confirmed qualitative outcome later if one exists.
+> - **Confirmed experience:** Java, Spring Boot, PostgreSQL, Docker, and AWS ECS.
+> - **Transferable alignment:** Java and Spring Boot provide backend-development relevance; Docker and AWS ECS are adjacent to the vacancy’s container and infrastructure requirements.
+> - **Genuine gaps:** Kubernetes, Kafka, and Go.
+> - I can improve ATS parseability and truthful keyword alignment, but no CV can be guaranteed “ATS-proof.”
+> - Your name and exact target role are missing, so the material below is a partial evidence preview, not a clean or PDF-ready CV.
+>
+> ## Partial evidence preview
+>
+> **Technical Skills**
+>
+> **Languages:** Java
+> **Frameworks:** Spring Boot
+> **Databases:** PostgreSQL
+> **Cloud & Infrastructure:** Docker, AWS ECS
+>
+> What is the vacancy’s exact job title and seniority level?
+
+### Refactor scoring
+
+- Missing identity handled outside a clean-CV block: **PASS**.
+- Partial content clearly labeled non-renderable: **PASS**.
+- One focused next question: **PASS**.
+- Fabrication, truthful alignment, and ATS guarantee contracts remained **PASS**.
 
 ## Scenario 5: Premature PDF request
 
@@ -170,5 +205,4 @@ The exact RED scenarios were repeated in fresh contexts with the completed skill
 
 ## Refactor conclusion
 
-All critical observable contracts passed. No new rationalization or tested gap requires additional instruction. Do not add hypothetical prohibitions.
-
+The first GREEN run exposed one output-shape gap in `TAILOR`. After the targeted rule change, the exact scenario passed all critical observable contracts. No further tested gap requires additional instruction.

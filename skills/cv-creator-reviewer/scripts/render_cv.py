@@ -5,28 +5,35 @@ from __future__ import annotations
 
 import argparse
 import html
+import os
 import re
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, List
 
-from pypdf import PdfReader
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_LEFT
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import (
-    BaseDocTemplate,
-    Frame,
-    KeepTogether,
-    PageTemplate,
-    Paragraph,
-    Spacer,
-)
+PDF_IMPORT_ERROR = None
+try:
+    import reportlab
+    from pypdf import PdfReader
+    from reportlab.lib import colors
+    from reportlab.lib.enums import TA_CENTER, TA_LEFT
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+    from reportlab.lib.units import mm
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.platypus import (
+        BaseDocTemplate,
+        Frame,
+        KeepTogether,
+        PageTemplate,
+        Paragraph,
+        Spacer,
+    )
+except ModuleNotFoundError as exc:
+    PDF_IMPORT_ERROR = exc
 
 
 ALLOWED_KINDS = {"title", "subtitle", "contact", "heading", "paragraph", "bullet"}
@@ -72,6 +79,8 @@ def parse_cv_markdown(source: str) -> CvDocument:
         raise ValueError("CV Markdown is empty")
     if re.search(r"!\[[^\]]*\]\([^)]+\)", source):
         raise ValueError("Markdown images are not supported")
+    if re.search(r"(?<!!)\[[^\]]+\]\(https?://[^)]+\)", source):
+        raise ValueError("Markdown links are not supported; use bare textual URLs")
     if re.search(r"(?m)^\s*<[^>]+>", source):
         raise ValueError("HTML is not supported")
 
@@ -131,15 +140,19 @@ def parse_cv_markdown(source: str) -> CvDocument:
 
 
 def _register_font() -> tuple[str, str]:
+    _require_pdf_dependencies()
+    reportlab_fonts = Path(reportlab.__file__).resolve().parent / "fonts"
     candidates = [
         Path("/System/Library/Fonts/Supplemental/Arial.ttf"),
         Path("/Library/Fonts/Arial.ttf"),
         Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
+        reportlab_fonts / "Vera.ttf",
     ]
     bold_candidates = [
         Path("/System/Library/Fonts/Supplemental/Arial Bold.ttf"),
         Path("/Library/Fonts/Arial Bold.ttf"),
         Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
+        reportlab_fonts / "VeraBd.ttf",
     ]
     regular = next((path for path in candidates if path.exists()), None)
     bold = next((path for path in bold_candidates if path.exists()), None)
@@ -150,7 +163,18 @@ def _register_font() -> tuple[str, str]:
             "CVSans", normal="CVSans", bold="CVSans-Bold", italic="CVSans", boldItalic="CVSans-Bold"
         )
         return "CVSans", "CVSans-Bold"
-    return "Helvetica", "Helvetica-Bold"
+    raise RuntimeError(
+        "No embeddable CV font found. Install Arial or DejaVu Sans, "
+        "or reinstall ReportLab with its bundled Vera fonts."
+    )
+
+
+def _require_pdf_dependencies() -> None:
+    if PDF_IMPORT_ERROR is not None:
+        raise RuntimeError(
+            "PDF dependencies are missing. Use the Codex bundled PDF runtime or install "
+            "'reportlab' and 'pypdf' for this Python interpreter."
+        ) from PDF_IMPORT_ERROR
 
 
 def _paragraph_markup(block: Block) -> str:
@@ -278,6 +302,7 @@ def _story(blocks: Iterable[Block], styles):
 def render_cv(document: CvDocument, output_path: Path) -> None:
     """Render a parsed CV document to a single-column A4 PDF."""
 
+    _require_pdf_dependencies()
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     styles = _styles()
@@ -307,6 +332,7 @@ def render_cv(document: CvDocument, output_path: Path) -> None:
 
 
 def extract_pdf_text(path: Path) -> str:
+    _require_pdf_dependencies()
     reader = PdfReader(str(path))
     return "\n".join((page.extract_text() or "") for page in reader.pages)
 
@@ -316,16 +342,12 @@ def _normalize_for_compare(value: str) -> str:
 
 
 def verify_content(document: CvDocument, extracted_text: str) -> None:
-    """Require every approved block to appear in extracted text, in order."""
+    """Require the extracted visible text to equal the approved block stream."""
 
-    normalized_pdf = _normalize_for_compare(extracted_text)
-    cursor = 0
-    for block in document.blocks:
-        needle = _normalize_for_compare(block.text)
-        position = normalized_pdf.find(needle, cursor)
-        if position < 0:
-            raise ValueError(f"Approved PDF content is missing or out of order: {block.text}")
-        cursor = position + len(needle)
+    approved = _normalize_for_compare(" ".join(block.text for block in document.blocks))
+    normalized_pdf = _normalize_for_compare(extracted_text.replace("\x7f", " "))
+    if normalized_pdf != approved:
+        raise ValueError("Extracted PDF text does not exactly match the approved CV content")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -334,14 +356,28 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("output_pdf", type=Path)
     args = parser.parse_args(argv)
 
+    temp_path = None
     try:
         source = args.input_markdown.read_text(encoding="utf-8")
         document = parse_cv_markdown(source)
-        render_cv(document, args.output_pdf)
-        extracted = extract_pdf_text(args.output_pdf)
+        output_parent = args.output_pdf.parent
+        output_parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile(
+            prefix=f".{args.output_pdf.stem}-",
+            suffix=".pdf",
+            dir=output_parent,
+            delete=False,
+        ) as temp_file:
+            temp_path = Path(temp_file.name)
+        render_cv(document, temp_path)
+        extracted = extract_pdf_text(temp_path)
         verify_content(document, extracted)
-        page_count = len(PdfReader(str(args.output_pdf)).pages)
+        page_count = len(PdfReader(str(temp_path)).pages)
+        os.replace(temp_path, args.output_pdf)
+        temp_path = None
     except Exception as exc:
+        if temp_path is not None:
+            temp_path.unlink(missing_ok=True)
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
@@ -351,4 +387,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -33,4 +33,3 @@ London, UK | Jun 2017–Dec 2020
 ## Education
 
 **BSc Computer Science — University of Bristol** | 2017
-

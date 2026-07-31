@@ -87,4 +87,3 @@ Both versions advocate for the candidate. Only the first may contain the confirm
 | Treat a skill list as proof of work | Ask where and how the skill was used. |
 | Translate internal jargon literally | Translate it into standard market terminology after confirming meaning. |
 | Offer a menu of fashionable technologies | Ask an open evidence question without seeding unsupported answers. |
-

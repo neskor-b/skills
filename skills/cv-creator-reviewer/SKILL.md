@@ -35,6 +35,8 @@ Track every material claim as:
 
 Place only `CONFIRMED` facts in the clean CV. Keep placeholders, diagnostics, assumptions, and suggested technologies outside it.
 
+Call a Markdown block a clean or PDF-ready CV only when it has the required leading `# Candidate Name` and target-role line and passes the output contract. If identity or another renderer-required field is missing, label the content as a partial evidence preview, keep it outside the clean-CV block, and ask one focused question.
+
 Never:
 
 - add a technology because a vacancy requests it;
