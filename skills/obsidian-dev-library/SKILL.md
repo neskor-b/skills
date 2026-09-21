@@ -1,11 +1,11 @@
 ---
-name: obsidian-programming-notes
-description: Use when turning programming sources (books, articles, docs, courses) into linked Ukrainian notes in an Obsidian vault, routing ideas into source notes, concepts, maps, playbooks, code notes, and captures.
+name: obsidian-dev-library
+description: Use when turning programming sources (books, articles, docs, courses) into linked Ukrainian reading notes in an Obsidian programming source library, routing ideas into source notes, concepts, maps, playbooks, code notes, and captures.
 ---
 
-# Obsidian Programming Notes
+# Obsidian Dev Library
 
-Use this skill to turn programming sources into linked Obsidian notes in `vault/`.
+Use this skill to turn programming sources into linked reading notes in the `obsidian-dev-library` source library, using its `vault/` structure.
 
 Resolve every relative path mentioned in this skill relative to this skill directory, meaning the directory that contains this `SKILL.md`, not relative to the current workspace or the Obsidian vault.
 

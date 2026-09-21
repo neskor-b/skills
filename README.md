@@ -6,8 +6,8 @@ This repository contains local skills for knowledge management, repository analy
 
 | Skill | Purpose | External dependencies |
 | --- | --- | --- |
-| `obsidian-knowledge-notes` | Turns source material into linked knowledge notes for Obsidian | `obsidian-markdown`, `obsidian-cli`, `obsidian-bases` |
-| `obsidian-programming-notes` | Turns programming sources into linked notes for Obsidian | `obsidian-markdown`, `obsidian-cli`, `obsidian-bases` |
+| `obsidian-source-library` | Creates linked reading notes in an Obsidian source library | `obsidian-markdown`, `obsidian-cli`, `obsidian-bases` |
+| `obsidian-dev-library` | Creates linked reading notes in the Obsidian programming library | `obsidian-markdown`, `obsidian-cli`, `obsidian-bases` |
 | `repo-architecture-analyzer` | Analyzes a repository architecture and builds a structured entity model | None |
 | `repo-to-obsidian` | Generates a linked Obsidian vault from a code repository | `repo-architecture-analyzer` (local), `obsidian-markdown` |
 | `google-interview-coach` | Runs adaptive interviews from Google Sheets and maintains linked Google Docs cheat sheets | `google-drive`, `google-sheets`, `google-docs` |
@@ -20,9 +20,9 @@ For live use of `google-interview-coach`, connect the Google Drive plugin.
 
 | Skill | Used by | Repository |
 | --- | --- | --- |
-| `obsidian-markdown` | `obsidian-knowledge-notes`, `obsidian-programming-notes`, `repo-to-obsidian` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-markdown> |
-| `obsidian-cli` | `obsidian-knowledge-notes`, `obsidian-programming-notes` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-cli> |
-| `obsidian-bases` | `obsidian-knowledge-notes`, `obsidian-programming-notes` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-bases> |
+| `obsidian-markdown` | `obsidian-source-library`, `obsidian-dev-library`, `repo-to-obsidian` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-markdown> |
+| `obsidian-cli` | `obsidian-source-library`, `obsidian-dev-library` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-cli> |
+| `obsidian-bases` | `obsidian-source-library`, `obsidian-dev-library` | <https://github.com/kepano/obsidian-skills/tree/main/skills/obsidian-bases> |
 
 `skills-lock.json` in this repository also shows that the installed external skills come from `git@github.com:kepano/obsidian-skills.git`.
 

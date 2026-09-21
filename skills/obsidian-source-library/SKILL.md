@@ -1,11 +1,11 @@
 ---
-name: obsidian-knowledge-notes
-description: Use when turning books, articles, papers, course notes, excerpts, or raw fragments into linked Ukrainian notes in an Obsidian vault, routing ideas into source notes, concepts, arguments, maps, playbooks, and captures.
+name: obsidian-source-library
+description: Use when turning books, articles, papers, course notes, excerpts, or raw fragments into linked Ukrainian reading notes in an Obsidian source library, routing ideas into source notes, concepts, arguments, maps, playbooks, and captures.
 ---
 
-# Obsidian Knowledge Notes
+# Obsidian Source Library
 
-Use this skill to turn source material and raw note fragments into linked Obsidian notes in `vault/`.
+Use this skill to turn source material and raw note fragments into linked reading notes in an Obsidian source library using the `vault/` structure.
 
 Resolve every relative path mentioned in this skill relative to this skill directory, meaning the directory that contains this `SKILL.md`, not relative to the current workspace or the Obsidian vault.
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Source Library"
+  short_description: "Create linked reading notes in an Obsidian source library"
+  default_prompt: "Use $obsidian-source-library to turn these excerpts into linked reading notes, concepts, and maps in my Obsidian source library."
