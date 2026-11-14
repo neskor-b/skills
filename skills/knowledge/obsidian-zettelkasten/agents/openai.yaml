@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Zettelkasten"
+  short_description: "Develop connected ideas in your own explanatory style"
+  default_prompt: "Use $obsidian-zettelkasten to help me explain this material in my own words and propose connected notes for my Obsidian vault before writing."

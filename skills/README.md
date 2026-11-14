@@ -5,7 +5,8 @@ Group first-party skills by purpose:
 ```text
 skills/
 ├── knowledge/
-│   └── obsidian-source-notes/
+│   ├── obsidian-source-notes/
+│   └── obsidian-zettelkasten/
 ├── engineering/
 │   ├── repo-architecture-analyzer/
 │   ├── repo-to-obsidian/

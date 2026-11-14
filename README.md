@@ -6,6 +6,7 @@ This repository contains local skills for knowledge management, repository analy
 
 | Category | Skill | Purpose |
 | --- | --- | --- |
+| Knowledge | [obsidian-zettelkasten](skills/knowledge/obsidian-zettelkasten/SKILL.md) | Develops a personal idea network through guided learning and calibrated direct authoring |
 | Knowledge | [obsidian-source-notes](skills/knowledge/obsidian-source-notes/SKILL.md) | Turns sources into linked Ukrainian notes, arguments, code, maps and playbooks |
 | Engineering | [repo-architecture-analyzer](skills/engineering/repo-architecture-analyzer/SKILL.md) | Analyzes repository architecture and builds a structured entity model |
 | Engineering | [repo-to-obsidian](skills/engineering/repo-to-obsidian/SKILL.md) | Generates a linked Obsidian vault from a code repository |
@@ -18,7 +19,7 @@ Skills are grouped by purpose under `skills/<category>/<skill-name>/`. See [the 
 
 ## External Dependencies
 
-`obsidian-source-notes` delegates format and tool mechanics to the official [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills) package rather than duplicating them. Load only the skills relevant to the current task.
+`obsidian-source-notes` and `obsidian-zettelkasten` delegate format and tool mechanics to the official [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills) package rather than duplicating them. Load only the skills relevant to the current task.
 
 | Skill | Role in source notes |
 | --- | --- |
@@ -54,7 +55,7 @@ npx skills add .
 npx skills add https://github.com/obsidianmd/obsidian-skills
 ```
 
-Select the seven skills listed above for the full source-to-notes workflow.
+Both knowledge skills use the seven capabilities listed above, loading only what a task needs. Headless is for explicitly requested Sync/Publish only; it is not required for local note work. Select the skills needed for your workflow.
 
 ## Notes
 
