@@ -31,3 +31,5 @@ source:
 - Винести частину в shared concept
 - Винести reasoning у standalone argument note
 - За потреби додати до topic map
+
+- За потреби виділити приклад коду або зібрати playbook
