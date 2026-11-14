@@ -4,12 +4,17 @@ This repository contains local skills for knowledge management, repository analy
 
 ## Local Skills
 
-| Skill | Purpose | External dependencies |
+| Category | Skill | Purpose |
 | --- | --- | --- |
-| `obsidian-source-notes` | Turns general and programming sources into linked Ukrainian notes, arguments, code, maps and playbooks | Official Obsidian skills, selected by task (see below) |
-| `repo-architecture-analyzer` | Analyzes a repository architecture and builds a structured entity model | None |
-| `repo-to-obsidian` | Generates a linked Obsidian vault from a code repository | `repo-architecture-analyzer` (local), `obsidian-markdown` |
-| `google-interview-coach` | Runs adaptive interviews from Google Sheets and maintains linked Google Docs cheat sheets | `google-drive`, `google-sheets`, `google-docs` |
+| Knowledge | [obsidian-source-notes](skills/knowledge/obsidian-source-notes/SKILL.md) | Turns sources into linked Ukrainian notes, arguments, code, maps and playbooks |
+| Engineering | [repo-architecture-analyzer](skills/engineering/repo-architecture-analyzer/SKILL.md) | Analyzes repository architecture and builds a structured entity model |
+| Engineering | [repo-to-obsidian](skills/engineering/repo-to-obsidian/SKILL.md) | Generates a linked Obsidian vault from a code repository |
+| Engineering | [documentation-writer](skills/engineering/documentation-writer/SKILL.md) | Writes software documentation using Diátaxis |
+| Career | [cv-creator-reviewer](skills/career/cv-creator-reviewer/SKILL.md) | Creates, reviews and tailors technical CVs |
+| Career | [google-interview-coach](skills/career/google-interview-coach/SKILL.md) | Runs adaptive interviews with Google Sheets and Docs |
+| Investigations | [slack-issue-investigator](skills/investigations/slack-issue-investigator/SKILL.md) | Investigates issues using Slack context |
+
+Skills are grouped by purpose under `skills/<category>/<skill-name>/`. See [the directory guide](skills/README.md) when adding a skill. Names used for invocation stay unchanged.
 
 ## External Dependencies
 
